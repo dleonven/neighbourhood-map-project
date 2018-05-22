@@ -1,33 +1,62 @@
-import React from 'react';
-import { View, ListView, StyleSheet, Text } from 'react-native';
+import React, { Component } from 'react';
+import ListItem from './ListItem.js'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-  },
-});
+const olStyle = {
+  border: '5px solid green',
+  backgroundColor: '#273D7A',
+  width: '30vw',
+  position: 'fixed',
+  top: '0'
+}
 
-class ListViewDemo extends React.Component {
+const butttonStyle = {
+  position: 'fixed',
+  top: '0',
+  left: '300px'
+}
 
-  constructor(props) {
-    super(props);
 
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
-    };
+class ListView extends Component {
+
+  state = {
+    visible: false
+  }
+
+
+  handleToggleList = () => {
+    this.setState({ visible: !this.state.visible })
   }
 
   render() {
-    return (
-      <ListView
-        style={styles.container}
-        dataSource={this.state.dataSource}
-        renderRow={(data) => <View><Text>{data}</Text></View>}
-      />
+
+    return(
+
+      <div>
+        <button style={butttonStyle} onClick={this.handleToggleList}>
+          burguer
+        </button>
+
+      {this.state.visible === true &&
+        <ol style={olStyle}>
+          {this.props.displayedLocations.map(
+            (location) =>
+              <li key={location.name}>
+                {location.name}
+              </li>
+          )}
+        </ol>
+
+      }
+
+
+      </div>
+
     );
+
+
+
   }
+
 }
 
-export default ListViewDemo;
+export default ListView;

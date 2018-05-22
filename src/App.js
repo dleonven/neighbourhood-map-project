@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import Prueba from './prueba.js'
+import Map from './Map.js'
+import ListView from './ListView.js'
 
 
 //https://medium.com/front-end-hacking/simplified-google-maps-api-in-a-react-app-46981441d2c9
@@ -9,13 +10,17 @@ import Prueba from './prueba.js'
 // import the Google Maps API Wrapper from google-maps-react
 import { GoogleApiWrapper } from 'google-maps-react'
 
+
 class App extends Component {
   render() {
-    console.log(this.props.google)
     return (
+      <div>
       <div className="App">
-        <Prueba google={this.props.google}/>
+        <Map google={this.props.google}/>
       </div>
+
+      </div>
+
     );
   }
 }

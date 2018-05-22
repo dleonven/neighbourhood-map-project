@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 //import ListViewDemo from './ListView.js'
 import ReactDOM from 'react-dom'
+import ListView from './ListView.js'
 
 
-class Prueba extends Component {
+
+class Map extends Component {
 
   state = {
       displayedLocations: [
@@ -52,8 +54,8 @@ class Prueba extends Component {
 
 
     const style = { // MUST specify dimensions of the Google map or it will not work. Also works best when style is specified inside the render function and created as an object
-      width: '90vw', // 90vw basically means take up 90% of the width screen. px also works.
-      height: '75vh' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
+      width: '100vw', // 90vw basically means take up 90% of the width screen. px also works.
+      height: '100vh' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
     }
 
     return (
@@ -62,6 +64,7 @@ class Prueba extends Component {
           loading map...
         </div>
         <div>
+          <ListView displayedLocations={this.state.displayedLocations}/>
         </div>
       </div>
 
@@ -70,4 +73,4 @@ class Prueba extends Component {
   }
 }
 
-export default Prueba;
+export default Map;
