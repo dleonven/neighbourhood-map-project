@@ -16,10 +16,13 @@ class Map extends Component {
     }
 
   componentDidMount() {
-      this.loadMap(); // call loadMap function to load the google map
-    }
+    // call loadMap function to load the google map
+    this.loadMap();
+  }
 
-    loadMap() {
+
+
+  loadMap() {
         if (this.props && this.props.google) { // checks to make sure that props have been passed
           const {google} = this.props; // sets props equal to google
           const maps = google.maps; // sets maps to google maps props
@@ -33,21 +36,53 @@ class Map extends Component {
             mapTypeId: 'roadmap' // optional main map layer. Terrain, satellite, hybrid or roadmap--if unspecified, defaults to roadmap.
           })
 
-          this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
+          // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
+          this.map = new maps.Map(node, mapConfig);
+
+
+          var largeInfowindow = new google.maps.InfoWindow();
 
 
           // ==================
-            // ADD MARKERS TO MAP
-            // ==================
-                this.state.displayedLocations.forEach( location => { // iterate through locations saved in state
-                  const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
-                    position: {lat: location.location.lat, lng: location.location.lng}, // sets position of marker to specified location
-                    map: this.map, // sets markers to appear on the map we just created on line 35
-                    title: location.name, // the title of the marker is set to the name of the location
-                  });
-                })
-              }
-          }
+          // ADD MARKERS TO MAP
+          // ==================
+          this.state.displayedLocations.forEach( location => { // iterate through locations saved in state
+            const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
+              position: {lat: location.location.lat, lng: location.location.lng}, // sets position of marker to specified location
+              map: this.map, // sets markers to appear on the map we just created on line 35
+              title: location.name, // the title of the marker is set to the name of the location
+            });
+
+
+            /*when a marker is clicked, then call the function to populate
+            the infowindow (arrow function used so to not have problems with
+            the 'this' scope)*/
+            marker.addListener('click', () => {
+              this.populateInfoWindow(marker, largeInfowindow)
+            });
+          })
+        }
+  }
+
+
+  /*I based myself on the Udacity classes logic to populate the infowindow*/
+  populateInfoWindow = (marker, infowindow) => {
+    // Check to make sure the infowindow is not already opened on this marker.
+    if(infowindow.marker != marker) {
+      infowindow.marker = marker;
+      infowindow.setContent('<div>' + marker.title + '</div>');
+      infowindow.open(this.map, marker);
+      // Make sure the marker property is cleared if the infowindow is closed.
+      infowindow.addListener('closeclick', () => {
+        infowindow.marker = null;
+      });
+    }
+  }
+
+
+
+
+
 
 
   render() {
