@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import Map from './Map.js'
-import ListView from './ListView.js'
 
 
 //https://medium.com/front-end-hacking/simplified-google-maps-api-in-a-react-app-46981441d2c9
