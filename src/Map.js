@@ -14,13 +14,13 @@ class Map extends Component {
 
 
   state = {
-      displayedLocations: [
+      locations: [
         { name: "Home", location: {lat: -33.889663, lng: 151.273881} },
         { name: "Outdoor Gym", location: {lat: -33.890111, lng: 151.280402} },
         { name: "Metro Supermarket", location: {lat: -33.889149, lng: 151.275638} },
       ],
 
-      displayedMarkers: [],
+      markers: [],
       infoWindow: []
     }
 
@@ -57,7 +57,7 @@ class Map extends Component {
           let infoWindow = new google.maps.InfoWindow()
           this.setState({ infoWindow: infoWindow })
 
-          this.state.displayedLocations.forEach( location => { // iterate through locations saved in state
+          this.state.locations.forEach( location => { // iterate through locations saved in state
             const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
               position: {lat: location.location.lat, lng: location.location.lng}, // sets position of marker to specified location
               map: this.map, // sets markers to appear on the map we just created on line 35
@@ -76,7 +76,7 @@ class Map extends Component {
 
           })
 
-          this.setState({ displayedMarkers: markers })
+          this.setState({ markers: markers })
 
         }
   }
@@ -108,10 +108,10 @@ class Map extends Component {
         </div>
         <div>
           <ListView
-            displayedLocations={this.state.displayedLocations}
+            locations={this.state.locations}
             populateInfoWindow={this.populateInfoWindow}
             infoWindow={this.state.infoWindow}
-            markers={this.state.displayedMarkers}
+            markers={this.state.markers}
           />
         </div>
       </div>

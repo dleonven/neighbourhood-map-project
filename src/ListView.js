@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import ListItem from './ListItem.js'
+
+import escapeRegExp from 'escape-string-regexp'
+
 
 const olStyle = {
   border: '5px solid green',
@@ -20,13 +22,30 @@ const butttonStyle = {
   left: '300px'
 }
 
+const listStyle = {
+  position: 'fixed',
+  top: '0',
+}
 
 class ListView extends Component {
 
-  state = {
-    visible: false
+  constructor(props) {
+    super(props);
+    //this.onShelfChange = this.onShelfChange.bind(this);
   }
 
+
+
+  state = {
+    visible: false,
+    query: ''
+  }
+
+
+  updateQuery = (query) => {
+    this.setState({query: query.trim() })
+    console.log(query)
+  }
 
   handleToggleList = () => {
     this.setState({ visible: !this.state.visible })
@@ -55,6 +74,25 @@ class ListView extends Component {
 
   render() {
 
+    const locations = this.props.locations
+    const markers = this.props.markers
+    const query = this.state.query
+    let filteredLocations
+    let filteredMarkers
+
+    if(query !== ''){
+
+      const match = new RegExp(escapeRegExp(query), 'i')
+
+      filteredLocations = locations.filter((location) => match.test(location.name))
+      filteredMarkers = markers.filter((marker) => match.test(marker.title))
+    } else {
+      filteredLocations = locations
+      filteredMarkers = markers
+    }
+
+
+
     return(
 
       <div>
@@ -66,15 +104,22 @@ class ListView extends Component {
         </button>
 
 
-
+      /*If the list should display*/
       {this.state.visible === true &&
 
-        <div>
+        <div style={listStyle}>
           <h1 style={h1Style}>Bondi Locations</h1>
 
+          <input
+            className='filter-locations'
+            type='text'
+            placeholder='filter locations'
+            value={query}
+            onChange={(event) => this.updateQuery(event.target.value)}
+          />
 
           <ol style={olStyle}>
-            {this.props.displayedLocations.map(
+            {filteredLocations.map(
               (location) =>
                 <li key={location.name} onClick={() => this.handleOnClickListItem(location.name)}>
                   {location.name}
