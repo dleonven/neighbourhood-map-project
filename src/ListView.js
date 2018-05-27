@@ -77,6 +77,7 @@ class ListView extends Component {
     const locations = this.props.locations
     const markers = this.props.markers
     const query = this.state.query
+    const map = this.props.map
     let filteredLocations
     let filteredMarkers
 
@@ -86,9 +87,22 @@ class ListView extends Component {
 
       filteredLocations = locations.filter((location) => match.test(location.name))
       filteredMarkers = markers.filter((marker) => match.test(marker.title))
+
+      //clean all marker from the map
+      markers.forEach( marker => {
+        marker.setMap(null)
+      })
+
+      //paint only the filtered ones
+      filteredMarkers.forEach( marker => {
+        marker.setMap(map)
+      })
+
     } else {
       filteredLocations = locations
-      filteredMarkers = markers
+      markers.forEach( marker => {
+        marker.setMap(map)
+      })
     }
 
 

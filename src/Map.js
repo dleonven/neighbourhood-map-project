@@ -63,7 +63,6 @@ class Map extends Component {
               map: this.map, // sets markers to appear on the map we just created on line 35
               title: location.name, // the title of the marker is set to the name of the location
             });
-            markers.push(marker)
 
             /*when a marker is clicked, then call the function to populate
             the infowindow (arrow function used so to not have problems with
@@ -72,7 +71,7 @@ class Map extends Component {
               this.populateInfoWindow(marker, infoWindow)
             });
 
-
+            markers.push(marker)
 
           })
 
@@ -99,8 +98,6 @@ class Map extends Component {
 
   render() {
 
-
-
     return (
       <div>
         <div ref="map" style={style}>
@@ -112,6 +109,7 @@ class Map extends Component {
             populateInfoWindow={this.populateInfoWindow}
             infoWindow={this.state.infoWindow}
             markers={this.state.markers}
+            map={this.map}
           />
         </div>
       </div>
