@@ -123,7 +123,6 @@ class ListView extends Component {
 
         <div style={listStyle}>
           <h1 style={h1Style}>Bondi Locations</h1>
-
           <input
             className='filter-locations'
             type='text'

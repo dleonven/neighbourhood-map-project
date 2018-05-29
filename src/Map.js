@@ -29,6 +29,29 @@ class Map extends Component {
     this.loadMap();
   }
 
+  addImage = (data, infowindow) => {
+    const prefix = data.response.photos.items[0].prefix
+    const suffix = data.response.photos.items[0].suffix
+    //const height = data.response.photos.items[0].height
+    //const width = data.response.photos.items[0].width
+const height = 100
+const width =100
+    const src = prefix+height+"x"+width+suffix
+
+    console.log(src)
+
+    console.log(infowindow)
+
+    infowindow.setContent('<img src='+src+'></img>');
+
+
+
+  }
+
+  requestError = (e,part) => {
+    console.log(e);
+  }
+
 
 
   loadMap() {
@@ -75,6 +98,7 @@ class Map extends Component {
 
           })
 
+
           this.setState({ markers: markers })
 
         }
@@ -83,11 +107,31 @@ class Map extends Component {
 
   /*I based myself on the Udacity classes logic to populate the infowindow*/
   populateInfoWindow = (marker, infowindow) => {
+
     // Check to make sure the infowindow is not already opened on this marker.
     if(infowindow.marker !== marker) {
       infowindow.marker = marker;
       infowindow.setContent('<div>' + marker.title + '</div>');
+
+      fetch(`https://api.foursquare.com/v2/venues/4b058763f964a520848f22e3/photos?client_id=I4HL4OWMDNTMOH2RFXVMERZ1TETMUEPQM3R0DCTSZJVDLXBY&client_secret=W2FIUMMOOOBC2LZPYYIUAO5OD1AE3A0J0L2GZ4JOQNBXC4JD&v=20181010`)
+      .then(response => response.json())
+      .then((data) => this.addImage(data, infowindow))
+      .catch(e => {this.requestError(e, 'image')});
+
+
+
+
+
+
+
       infowindow.open(this.map, marker);
+
+
+
+
+
+
+
       // Make sure the marker property is cleared if the infowindow is closed.
       infowindow.addListener('closeclick', () => {
         infowindow.marker = null;
