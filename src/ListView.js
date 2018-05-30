@@ -52,15 +52,18 @@ class ListView extends Component {
   }
 
 
-  handleOnClickListItem = (locationName) => {
+  handleOnClickListItem = (place) => {
 
-    let infoWindow = this.props.infoWindow
+    console.log(place)
+
+    const clickedPlaceName = place.name
+    let infowindow = this.props.infowindow
 
     //find which of the markers have to open the infowindow
-    this.props.markers.forEach(
-      marker => {
-        if(marker.title === locationName){
-          this.props.populateInfoWindow(marker, infoWindow)
+    this.props.places.forEach(
+      place => {
+        if(place.name === clickedPlaceName){
+          this.props.populateInfowindow(place, infowindow)
         }
       }
     )
@@ -74,34 +77,39 @@ class ListView extends Component {
 
   render() {
 
-    const locations = this.props.locations
-    const markers = this.props.markers
+    const places = this.props.places
     const query = this.state.query
     const map = this.props.map
-    let filteredLocations
-    let filteredMarkers
+    let filteredPlaces
 
     if(query !== ''){
 
       const match = new RegExp(escapeRegExp(query), 'i')
 
-      filteredLocations = locations.filter((location) => match.test(location.name))
-      filteredMarkers = markers.filter((marker) => match.test(marker.title))
+      filteredPlaces = places.filter((place) => match.test(place.name))
 
       //clean all marker from the map
-      markers.forEach( marker => {
-        marker.setMap(null)
+      places.forEach( place => {
+        place.marker.setMap(null)
       })
 
       //paint only the filtered ones
-      filteredMarkers.forEach( marker => {
-        marker.setMap(map)
+      filteredPlaces.forEach( place => {
+        place.marker.setMap(map)
       })
 
     } else {
-      filteredLocations = locations
-      markers.forEach( marker => {
-        marker.setMap(map)
+      filteredPlaces = places
+      places.forEach( place => {
+
+        /*If the marker object is not empty..
+        this if was needed to avoid the problem that this piece of code was
+        run before the marker was assigned to the place*/
+        if(Object.keys(place.marker).length > 0){
+          place.marker.setMap(map)
+        }
+
+
       })
     }
 
@@ -122,20 +130,20 @@ class ListView extends Component {
       {this.state.visible === true &&
 
         <div style={listStyle}>
-          <h1 style={h1Style}>Bondi Locations</h1>
+          <h1 style={h1Style}>Bondi Places</h1>
           <input
-            className='filter-locations'
+            className='filter-places'
             type='text'
-            placeholder='filter locations'
+            placeholder='filter places'
             value={query}
             onChange={(event) => this.updateQuery(event.target.value)}
           />
 
           <ol style={olStyle}>
-            {filteredLocations.map(
-              (location) =>
-                <li key={location.name} onClick={() => this.handleOnClickListItem(location.name)}>
-                  {location.name}
+            {filteredPlaces.map(
+              (place) =>
+                <li key={place.name} onClick={() => this.handleOnClickListItem(place)}>
+                  {place.name}
                 </li>
             )}
           </ol>
