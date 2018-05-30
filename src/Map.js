@@ -49,7 +49,6 @@ class Map extends Component {
             this.map = new maps.Map(node, mapConfig);
 
 
-
             // ==================
             // ADD MARKERS TO MAP
             // ==================
@@ -62,6 +61,7 @@ class Map extends Component {
                 position: {lat: place.location.lat, lng: place.location.lng}, // sets position of marker to specified location
                 map: this.map, // sets markers to appear on the map we just created on line 35
                 title: place.name, // the title of the marker is set to the name of the place
+                animation: google.maps.Animation.DROP
               });
 
               /*Asign the new marker object to it's place
@@ -74,6 +74,8 @@ class Map extends Component {
               the infowindow (arrow function used so to not have problems with
               the 'this' scope)*/
               marker.addListener('click', () => {
+
+                this.animateMarker(marker, google)
                 this.populateInfowindow(place, infowindow)
               });
 
@@ -82,7 +84,14 @@ class Map extends Component {
           }
     }
 
+  animateMarker = (marker, google) => {
 
+    /*Start bouncing with the click*/
+    marker.setAnimation(google.maps.Animation.BOUNCE)
+
+    /*Stop the bouncing after the first cicle*/
+    setTimeout(() => { marker.setAnimation(null) }, 600);
+  }
 
   /*I based myself on the Udacity classes logic to populate the infowindow*/
   populateInfowindow = (place, infowindow) => {
@@ -146,6 +155,7 @@ class Map extends Component {
 
   render() {
 
+
     return (
       <div>
         <div ref="map" style={style}>
@@ -157,6 +167,8 @@ class Map extends Component {
             populateInfowindow={this.populateInfowindow}
             infowindow={this.state.infowindow}
             map={this.map}
+            animateMarker={this.animateMarker}
+            google={this.props.google}
           />
         </div>
       </div>

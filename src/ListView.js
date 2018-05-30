@@ -44,7 +44,6 @@ class ListView extends Component {
 
   updateQuery = (query) => {
     this.setState({query: query.trim() })
-    console.log(query)
   }
 
   handleToggleList = () => {
@@ -54,7 +53,9 @@ class ListView extends Component {
 
   handleOnClickListItem = (place) => {
 
-    console.log(place)
+console.log(this.props.google.maps.InfoWindow)
+    this.props.animateMarker(place.marker, this.props.google)
+
 
     const clickedPlaceName = place.name
     let infowindow = this.props.infowindow
@@ -76,6 +77,8 @@ class ListView extends Component {
 
 
   render() {
+
+
 
     const places = this.props.places
     const query = this.state.query
