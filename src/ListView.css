@@ -5,6 +5,7 @@
 
 .map {
   height: 100vw;
+  height: 100vh;
 }
 
 .list-view {
@@ -22,6 +23,7 @@
   position: relative;
   top: 13px;
   left: 12px;
+  cursor: pointer;
 }
 
 .bar1, .bar2, .bar3 {
@@ -56,6 +58,7 @@
   margin-top: 40px;
   color: white;
   font-family: fantasy;
+  cursor: pointer;
 }
 
 li:first-child {

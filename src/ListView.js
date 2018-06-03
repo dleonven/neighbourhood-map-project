@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './ListView.css';
+import ListItem from './ListItem.js';
+
 
 
 import escapeRegExp from 'escape-string-regexp'
@@ -7,39 +9,21 @@ import escapeRegExp from 'escape-string-regexp'
 class ListView extends Component {
 
   state = {
-    query: '',
-    hover: false
+    query: ''
   }
 
   updateQuery = (query) => {
     this.setState({query: query.trim() })
   }
 
-  handleOnClickListItem = (place) => {
-
-    this.props.animateMarker(place.marker, this.props.google)
-
-
-    const clickedPlaceName = place.name
-    let infowindow = this.props.infowindow
-
-    //find which of the markers have to open the infowindow
-    this.props.places.forEach(
-      place => {
-        if(place.name === clickedPlaceName){
-          this.props.populateInfowindow(place, infowindow)
-        }
-      }
-    )
 
 
 
 
-  }
 
-  toggleHover = () => {
-    this.setState({ hover: !this.state.hover })
-  }
+
+
+
 
   render() {
 
@@ -80,12 +64,6 @@ class ListView extends Component {
     }
 
 
-
-let style = {
-  color: 'white'
-}
-//{this.state.hover ? "li-on-hover" : "li"}
-
     return(
         <div className="list-view">
           <h1 className="title">Bondi Places</h1>
@@ -100,14 +78,15 @@ let style = {
           <ol>
             {filteredPlaces.map(
               (place) =>
-                <li
-                  className="li"
+                <ListItem
                   key={place.name}
-                  onMouseOver={style={style}}
-                  onMouseLeave={this.toggleHover}
-                  onClick={() => this.handleOnClickListItem(place)}>
-                  {place.name}
-                </li>
+                  place={place}
+                  places={this.props.places}
+                  animateMarker={this.props.animateMarker}
+                  google={this.props.google}
+                  infowindow={this.props.infowindow}
+                  populateInfowindow={this.props.populateInfowindow}
+                />
             )}
           </ol>
 

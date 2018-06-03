@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
-import ListView from './ListView.js'
+import ReactDOM from 'react-dom';
+import ListView from './ListView.js';
 import './ListView.css';
 
 
