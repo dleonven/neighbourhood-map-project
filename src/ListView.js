@@ -1,59 +1,22 @@
 import React, { Component } from 'react';
+import './ListView.css';
+
 
 import escapeRegExp from 'escape-string-regexp'
 
-
-const olStyle = {
-  border: '5px solid green',
-  backgroundColor: '#273D7A',
-  width: '30vw',
-  position: 'fixed',
-  top: '50px'
-}
-
-const h1Style = {
-  position: 'fixed',
-  top: '0'
-}
-
-const butttonStyle = {
-  position: 'fixed',
-  top: '0',
-  left: '300px'
-}
-
-const listStyle = {
-  position: 'fixed',
-  top: '0',
-}
-
 class ListView extends Component {
 
-  constructor(props) {
-    super(props);
-    //this.onShelfChange = this.onShelfChange.bind(this);
-  }
-
-
-
   state = {
-    visible: false,
-    query: ''
+    query: '',
+    hover: false
   }
-
 
   updateQuery = (query) => {
     this.setState({query: query.trim() })
   }
 
-  handleToggleList = () => {
-    this.setState({ visible: !this.state.visible })
-  }
-
-
   handleOnClickListItem = (place) => {
 
-console.log(this.props.google.maps.InfoWindow)
     this.props.animateMarker(place.marker, this.props.google)
 
 
@@ -74,11 +37,11 @@ console.log(this.props.google.maps.InfoWindow)
 
   }
 
-
+  toggleHover = () => {
+    this.setState({ hover: !this.state.hover })
+  }
 
   render() {
-
-
 
     const places = this.props.places
     const query = this.state.query
@@ -118,47 +81,37 @@ console.log(this.props.google.maps.InfoWindow)
 
 
 
+let style = {
+  color: 'white'
+}
+//{this.state.hover ? "li-on-hover" : "li"}
+
     return(
-
-      <div>
-
-
-
-        <button style={butttonStyle} onClick={this.handleToggleList}>
-          burguer
-        </button>
-
-
-      /*If the list should display*/
-      {this.state.visible === true &&
-
-        <div style={listStyle}>
-          <h1 style={h1Style}>Bondi Places</h1>
+        <div className="list-view">
+          <h1 className="title">Bondi Places</h1>
           <input
-            className='filter-places'
+            className='input'
             type='text'
             placeholder='filter places'
             value={query}
             onChange={(event) => this.updateQuery(event.target.value)}
           />
 
-          <ol style={olStyle}>
+          <ol>
             {filteredPlaces.map(
               (place) =>
-                <li key={place.name} onClick={() => this.handleOnClickListItem(place)}>
+                <li
+                  className="li"
+                  key={place.name}
+                  onMouseOver={style={style}}
+                  onMouseLeave={this.toggleHover}
+                  onClick={() => this.handleOnClickListItem(place)}>
                   {place.name}
                 </li>
             )}
           </ol>
 
         </div>
-
-
-      }
-
-
-      </div>
-
     );
 
 

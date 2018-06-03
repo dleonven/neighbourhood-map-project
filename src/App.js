@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import Map from './Map.js'
+import './ListView.css';
+
 
 
 //https://medium.com/front-end-hacking/simplified-google-maps-api-in-a-react-app-46981441d2c9
@@ -11,6 +12,12 @@ import { GoogleApiWrapper } from 'google-maps-react'
 
 
 class App extends Component {
+
+
+
+
+
+
   render() {
     return (
       <div>

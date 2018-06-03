@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
-//import ListViewDemo from './ListView.js'
 import ReactDOM from 'react-dom'
 import ListView from './ListView.js'
-
-const style = { // MUST specify dimensions of the Google map or it will not work. Also works best when style is specified inside the render function and created as an object
-  width: '100vw', // 90vw basically means take up 90% of the width screen. px also works.
-  height: '100vh' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
-}
+import './ListView.css';
 
 
 
 class Map extends Component {
-
 
   state = {
       places: [
@@ -22,14 +16,17 @@ class Map extends Component {
         { name: "Bondi Icebergs", location: {lat: -33.894996, lng: 151.274340}, foursquareID: '4b058771f964a5206b9322e3', marker: {} },
       ],
 
-      infowindow: []
+      infowindow: [],
+
+      listViewVisible: false
     }
 
   componentDidMount() {
+
     // call loadMap function to load the google map
     this.loadMap();
-    debugger
   }
+
 
   loadMap() {
           if (this.props && this.props.google) { // checks to make sure that props have been passed
@@ -83,6 +80,11 @@ class Map extends Component {
 
           }
     }
+
+    handleToggleList = () => {
+      this.setState({ listViewVisible: !this.state.listViewVisible })
+    }
+
 
   animateMarker = (marker, google) => {
 
@@ -149,28 +151,55 @@ class Map extends Component {
     console.log(e);
   }
 
-
-
-
-
   render() {
+    let mapNavContainerstyle
 
+    if(this.state.listViewVisible === true){
+      mapNavContainerstyle = {
+        paddingLeft: '230px'
+      }
+    }
 
     return (
       <div>
-        <div ref="map" style={style}>
-          loading map...
+        <div id="map-nav-container" style={mapNavContainerstyle}>
+          <div className="nav">
+            <div className="menu-icon" onClick={this.handleToggleList}>
+              <div className="bar1"></div>
+              <div className="bar2"></div>
+              <div className="bar3"></div>
+            </div>
+          </div>
+          <div className="map" ref="map">
+            loading map...
+          </div>
         </div>
-        <div>
-          <ListView
-            places={this.state.places}
-            populateInfowindow={this.populateInfowindow}
-            infowindow={this.state.infowindow}
-            map={this.map}
-            animateMarker={this.animateMarker}
-            google={this.props.google}
-          />
-        </div>
+
+
+        {/*If the list should display*/}
+        {this.state.listViewVisible === true &&
+
+
+          <div>
+            <ListView
+              places={this.state.places}
+              populateInfowindow={this.populateInfowindow}
+              infowindow={this.state.infowindow}
+              map={this.map}
+              animateMarker={this.animateMarker}
+              google={this.props.google}
+            />
+          </div>
+
+
+
+        }
+
+
+
+
+
+
       </div>
 
 
