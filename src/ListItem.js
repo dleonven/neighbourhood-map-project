@@ -43,9 +43,10 @@ let style
       <li
         className={this.state.hover ? "li-on-hover" : "li"}
         onMouseOver={this.toggleHover}
-
         onMouseLeave={this.toggleHover}
         onClick={() => this.handleOnClickListItem(place)}
+        onKeyPress={() => this.handleOnClickListItem(place)}
+        tabIndex="0"
       >
         {place.name}
       </li>

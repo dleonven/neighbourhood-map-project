@@ -139,7 +139,7 @@ class Map extends Component {
 
 
     const content = '<div>' + placeName + '</div>' +
-                    '<img src=' + src + '></img>'
+                    '<img src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>'
 
     infowindow.setContent(content);
 
@@ -163,14 +163,21 @@ class Map extends Component {
     return (
       <div>
         <div id="map-nav-container" style={mapNavContainerstyle}>
-          <div className="nav">
-            <div className="menu-icon" onClick={this.handleToggleList}>
+          <div className="nav" role="navigation">
+            <div
+            className="menu-icon"
+            role="button"
+            tabIndex="0"
+            aria-label="Menu Icon"
+            onClick={this.handleToggleList}
+            onKeyPress={this.handleToggleList}
+              >
               <div className="bar1"></div>
               <div className="bar2"></div>
               <div className="bar3"></div>
             </div>
           </div>
-          <div className="map" ref="map">
+          <div className="map" ref="map" role="application">
             loading map...
           </div>
         </div>
