@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 
 class ListItem extends Component {
 
+  /*State to be able to know when the mouse is over the item*/
   state = {
     hover: false
   }
 
+  //Self explicative
   toggleHover = () => {
     this.setState({ hover: !this.state.hover })
   }
 
-
+  /*Populates infowindow calling callback functions from
+  grandparent Map component*/
   handleOnClickListItem = (place) => {
 
     this.props.animateMarker(place.marker, this.props.google)
@@ -34,12 +37,10 @@ class ListItem extends Component {
 
     const place = this.props.place
 
-
-
-let style
-
     return(
 
+      /*Toggle className depending on state, to be able to style it differently
+      Added tabindex=0 to be able to focus it on tab*/
       <li
         className={this.state.hover ? "li-on-hover" : "li"}
         onMouseOver={this.toggleHover}

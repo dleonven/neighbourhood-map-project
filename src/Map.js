@@ -7,6 +7,9 @@ import './ListView.css';
 
 class Map extends Component {
 
+  /*The foursquareID is the id of the venue (place) in foursquare...i added as
+  an attribute just to avoid making one more api call with the place name to get the id
+  (there was no call that directly returned the image just with the place name)*/
   state = {
       places: [
         { name: "Namaste Restaurant", location: {lat: -33.889350, lng: 151.270787}, foursquareID: '50c43ab5e4b09f38ad37bf00', marker: {} },
@@ -16,18 +19,20 @@ class Map extends Component {
         { name: "Bondi Icebergs", location: {lat: -33.894996, lng: 151.274340}, foursquareID: '4b058771f964a5206b9322e3', marker: {} },
       ],
 
+      /*I added the infowindow to the state because it was the onle way i
+      found to access it and be able to pass it to child components*/
       infowindow: [],
 
       listViewVisible: false
     }
 
   componentDidMount() {
-
-    // call loadMap function to load the google map
+    //Call loadMap function to load the google map
     this.loadMap();
   }
 
-
+  /*Part of the logic to load the map I took it from google. At the moment of writing
+  this comments i couldn't find the site i took it from*/
   loadMap() {
           if (this.props && this.props.google) { // checks to make sure that props have been passed
             const {google} = this.props; // sets props equal to google
@@ -49,6 +54,9 @@ class Map extends Component {
             // ==================
             // ADD MARKERS TO MAP
             // ==================
+            /*Pass the InfoWindow as state, so to be able to pass it to
+            child components (it has to be the same object used through the
+            entire app)*/
             let infowindow = new google.maps.InfoWindow()
             this.setState({ infowindow: infowindow })
 
@@ -81,11 +89,13 @@ class Map extends Component {
           }
     }
 
-    handleToggleList = () => {
+  /*Handler to toggle the state to be able to know when the to display
+  the ListView*/
+  handleToggleList = () => {
       this.setState({ listViewVisible: !this.state.listViewVisible })
     }
 
-
+  //Self explicative
   animateMarker = (marker, google) => {
 
     /*Start bouncing with the click*/
@@ -95,23 +105,22 @@ class Map extends Component {
     setTimeout(() => { marker.setAnimation(null) }, 600);
   }
 
-  /*I based myself on the Udacity classes logic to populate the infowindow*/
+  /*I partly based myself on the Udacity classes logic to populate the infowindow*/
   populateInfowindow = (place, infowindow) => {
 
       const marker = place.marker
-
 
       // Check to make sure the infowindow is not already opened on this marker.
       if(infowindow.marker !== marker) {
         infowindow.marker = marker;
 
-
+        //Foursquare data needed to the API call
         const clientID = 'client_id=I4HL4OWMDNTMOH2RFXVMERZ1TETMUEPQM3R0DCTSZJVDLXBY'
         const clientSecret = 'client_secret=W2FIUMMOOOBC2LZPYYIUAO5OD1AE3A0J0L2GZ4JOQNBXC4JD'
         const version = 'v=20181010'
-
         const requestUrl = 'https://api.foursquare.com/v2/venues/'+place.foursquareID+'/photos?'+clientID+'&'+clientSecret+'&'+version
 
+        /*Async Foursquare API call. Partly based on Udacity classes*/
         fetch(requestUrl)
         .then(response => response.json())
         .then((data) => this.setInfowindowContent(data, infowindow))
@@ -125,19 +134,19 @@ class Map extends Component {
       }
     }
 
-  /*...*/
+  /*Works with the API response data and sets the infowindow content*/
   setInfowindowContent = (data, infowindow) => {
     const prefix = data.response.photos.items[0].prefix
     const suffix = data.response.photos.items[0].suffix
-    //const height = data.response.photos.items[0].height
-    //const width = data.response.photos.items[0].width
+
+    //Size I want for the image
     const width = 120
     const height = 100
     const src = prefix+width+"x"+height+suffix
 
     const placeName = infowindow.marker.title
 
-
+    //Added alt and title to the img for accesibility
     const content = '<div>' + placeName + '</div>' +
                     '<img src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>'
 
@@ -152,20 +161,23 @@ class Map extends Component {
   }
 
   render() {
-    let mapNavContainerstyle
+    let mapNavContainerStyle
 
+    /*If the ListView is displayed, give this left padding to the container
+    of the nav+map*/
     if(this.state.listViewVisible === true){
-      mapNavContainerstyle = {
+      mapNavContainerStyle = {
         paddingLeft: '230px'
       }
     }
 
     return (
       <div>
-        <div id="map-nav-container" style={mapNavContainerstyle}>
+        <div id="map-nav-container" style={mapNavContainerStyle}>
           <div className="nav" role="navigation">
-            <div
-            className="menu-icon"
+            {/*Added tabindex to be able to focus it with tab,
+            and accesibility attributes*/}
+            <div className="menu-icon"
             role="button"
             tabIndex="0"
             aria-label="Menu Icon"
@@ -177,16 +189,14 @@ class Map extends Component {
               <div className="bar3"></div>
             </div>
           </div>
+          {/*Added accesibility role*/}
           <div className="map" ref="map" role="application">
             loading map...
           </div>
         </div>
 
-
         {/*If the list should display*/}
         {this.state.listViewVisible === true &&
-
-
           <div>
             <ListView
               places={this.state.places}
