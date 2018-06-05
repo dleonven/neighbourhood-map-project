@@ -28,7 +28,12 @@ class Map extends Component {
 
   componentDidMount() {
     //Call loadMap function to load the google map
-    this.loadMap();
+    try {
+      this.loadMap();
+    } catch(error){
+      alert("There was a problem displaying the map")
+    }
+
   }
 
   /*Part of the logic to load the map I took it from google. At the moment of writing
