@@ -166,6 +166,7 @@ class Map extends Component {
 
   requestError = (e,part) => {
     console.log(e);
+    alert("There was a problem displaying the image")
   }
 
   render() {
