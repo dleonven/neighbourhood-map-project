@@ -159,7 +159,7 @@ class Map extends Component {
 
     //Added alt and title to the img for accesibility
     const content = '<div>' + placeName + '</div>' +
-                    '<img src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>' +
+                    '<img src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>'
 
 
     infowindow.setContent(content);
