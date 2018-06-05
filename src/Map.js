@@ -144,6 +144,9 @@ class Map extends Component {
 
   /*Works with the API response data and sets the infowindow content*/
   setInfowindowContent = (data, infowindow) => {
+
+    console.log(data)
+
     const prefix = data.response.photos.items[0].prefix
     const suffix = data.response.photos.items[0].suffix
 
@@ -156,7 +159,8 @@ class Map extends Component {
 
     //Added alt and title to the img for accesibility
     const content = '<div>' + placeName + '</div>' +
-                    '<img src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>'
+                    '<img src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>' +
+
 
     infowindow.setContent(content);
 
