@@ -83,6 +83,7 @@ class ListView extends Component {
                   google={this.props.google}
                   infowindow={this.props.infowindow}
                   populateInfowindow={this.props.populateInfowindow}
+                  map={this.props.map}
                 />
             )}
           </ol>

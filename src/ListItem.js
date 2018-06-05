@@ -16,7 +16,12 @@ class ListItem extends Component {
   grandparent Map component*/
   handleOnClickListItem = (place) => {
 
-    this.props.animateMarker(place.marker, this.props.google)
+    const marker = place.marker
+
+    this.props.map.setCenter(marker.getPosition())
+
+
+    this.props.animateMarker(marker, this.props.google)
 
 
     const clickedPlaceName = place.name
