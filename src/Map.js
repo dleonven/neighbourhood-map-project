@@ -80,6 +80,9 @@ class Map extends Component {
               the 'this' scope)*/
               marker.addListener('click', () => {
 
+                this.map.setCenter(marker.getPosition())
+
+
                 this.animateMarker(marker, google)
                 this.populateInfowindow(place, infowindow)
               });
