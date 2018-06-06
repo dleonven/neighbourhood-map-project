@@ -36,7 +36,7 @@ class Map extends Component {
       try {
         if (this.props && this.props.google) { // checks to make sure that props have been passed
             const {google} = this.props; // sets props equal to google
-            const maps = google.maps; // sets maps to google maps props
+            const maps = "google.maps;" // sets maps to google maps props
 
             const mapRef = this.refs.map; // looks for HTML div ref 'map'. Returned in render below.
             const node = ReactDOM.findDOMNode(mapRef); // finds the 'map' div in the React DOM, names it node
@@ -201,7 +201,6 @@ class Map extends Component {
           </div>
           {/*Added accesibility role*/}
           <div className="map" ref="map" role="application">
-            loading map...
           </div>
         </div>
 
