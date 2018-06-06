@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './styles.css';
 
 class ListItem extends Component {
 
@@ -56,11 +57,8 @@ class ListItem extends Component {
       >
         {place.name}
       </li>
-
     )
   }
-
-
 }
 
 export default ListItem;

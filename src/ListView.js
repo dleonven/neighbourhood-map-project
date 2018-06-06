@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import './ListView.css';
 import ListItem from './ListItem.js';
-
-
-
+import './styles.css';
 import escapeRegExp from 'escape-string-regexp'
 
 class ListView extends Component {
@@ -90,11 +87,7 @@ class ListView extends Component {
 
         </div>
     );
-
-
-
   }
-
 }
 
 export default ListView;

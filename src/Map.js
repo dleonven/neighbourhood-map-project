@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ListView from './ListView.js';
-import './ListView.css';
-
-
+import './styles.css';
 
 class Map extends Component {
 
@@ -36,8 +34,9 @@ class Map extends Component {
 
   }
 
-  /*Part of the logic to load the map I took it from google. At the moment of writing
-  this comments i couldn't find the site i took it from*/
+  /*Part of the logic to load the map I took it from google:
+  https://medium.com/front-end-hacking/simplified-google-maps-api-in-a-react-app-46981441d2c9
+  */
   loadMap() {
           if (this.props && this.props.google) { // checks to make sure that props have been passed
             const {google} = this.props; // sets props equal to google
@@ -145,13 +144,12 @@ class Map extends Component {
   /*Works with the API response data and sets the infowindow content*/
   setInfowindowContent = (data, infowindow) => {
 
-    console.log(data)
 
     const prefix = data.response.photos.items[0].prefix
     const suffix = data.response.photos.items[0].suffix
 
-    //Size I want for the image
-    const width = 130
+    /*Size I want for the image. This sizes are set in the styles.css anyway*/
+    const width = 125
     const height = 100
     const src = prefix+width+"x"+height+suffix
 
@@ -159,7 +157,7 @@ class Map extends Component {
 
     //Added alt and title to the img for accesibility
     const content = '<div class="infowindow-title">' + placeName + '</div>' +
-                    '<img src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>' +
+                    '<img class="infowindow-img" src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>' +
                     '<p>(foursquare image)</p>'
 
 
@@ -170,7 +168,6 @@ class Map extends Component {
   }
 
   requestError = (e,part) => {
-    console.log(e);
     alert("There was a problem displaying the image")
   }
 
@@ -221,19 +218,8 @@ class Map extends Component {
               google={this.props.google}
             />
           </div>
-
-
-
         }
-
-
-
-
-
-
       </div>
-
-
     );
   }
 }
