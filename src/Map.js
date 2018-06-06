@@ -151,15 +151,16 @@ class Map extends Component {
     const suffix = data.response.photos.items[0].suffix
 
     //Size I want for the image
-    const width = 120
+    const width = 130
     const height = 100
     const src = prefix+width+"x"+height+suffix
 
     const placeName = infowindow.marker.title
 
     //Added alt and title to the img for accesibility
-    const content = '<div>' + placeName + '</div>' +
-                    '<img src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>'
+    const content = '<div class="infowindow-title">' + placeName + '</div>' +
+                    '<img src=' + src + ' alt="Image of ' + placeName +'" title="'+ placeName +'"></img>' +
+                    '<p>(foursquare image)</p>'
 
 
     infowindow.setContent(content);

@@ -61,3 +61,15 @@
 li:first-child {
     margin-top:0;
 }
+
+p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.infowindow-title {
+  font-family: fantasy;
+  font-size: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
