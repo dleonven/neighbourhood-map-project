@@ -19,8 +19,8 @@ class ListItem extends Component {
 
     const marker = place.marker
 
+    //center the map to the clicked location
     this.props.map.setCenter(marker.getPosition())
-
 
     this.props.animateMarker(marker, this.props.google)
 
