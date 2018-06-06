@@ -64,7 +64,6 @@ class ListView extends Component {
             className='input'
             type='text'
             placeholder='filter places'
-            role="textbox"
             value={query}
             onChange={(event) => this.updateQuery(event.target.value)}
           />

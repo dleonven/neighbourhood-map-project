@@ -26,19 +26,15 @@ class Map extends Component {
 
   componentDidMount() {
     //Call loadMap function to load the google map
-    try {
       this.loadMap();
-    } catch(error){
-      alert("There was a problem displaying the map")
-    }
-
   }
 
   /*Part of the logic to load the map I took it from google:
   https://medium.com/front-end-hacking/simplified-google-maps-api-in-a-react-app-46981441d2c9
   */
   loadMap() {
-          if (this.props && this.props.google) { // checks to make sure that props have been passed
+      try {
+        if (this.props && this.props.google) { // checks to make sure that props have been passed
             const {google} = this.props; // sets props equal to google
             const maps = google.maps; // sets maps to google maps props
 
@@ -93,14 +89,17 @@ class Map extends Component {
 
             })
 
-          }
-    }
+        }
+      } catch(error) {
+      alert("There was a problem displaying the map")
+        }
+  }
 
   /*Handler to toggle the state to be able to know when the to display
   the ListView*/
   handleToggleList = () => {
       this.setState({ listViewVisible: !this.state.listViewVisible })
-    }
+  }
 
   //Self explicative
   animateMarker = (marker, google) => {
