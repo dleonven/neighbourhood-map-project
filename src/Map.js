@@ -33,9 +33,12 @@ class Map extends Component {
   https://medium.com/front-end-hacking/simplified-google-maps-api-in-a-react-app-46981441d2c9
   */
   loadMap() {
-      try {
+
+
+
         if (this.props && this.props.google) { // checks to make sure that props have been passed
             const {google} = this.props; // sets props equal to google
+
             const maps = google.maps; // sets maps to google maps props
 
             const mapRef = this.refs.map; // looks for HTML div ref 'map'. Returned in render below.
@@ -90,9 +93,7 @@ class Map extends Component {
             })
 
         }
-      } catch(error) {
-      alert("There was a problem displaying the map")
-        }
+
   }
 
   /*Handler to toggle the state to be able to know when the to display

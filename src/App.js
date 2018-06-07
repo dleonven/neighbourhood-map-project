@@ -2,22 +2,39 @@ import React, { Component } from 'react';
 import Map from './Map.js'
 import './styles.css';
 
-// import the Google Maps API Wrapper from google-maps-react
-import { GoogleApiWrapper } from 'google-maps-react'
-
 class App extends Component {
+  state = {
+    google: {}
+  }
+
+componentWillMount() {
+
+  //Load the script to load the map and handle loading error
+  var newScript = document.createElement("script");
+  newScript.onerror = () => {
+    alert("There was a problem displaying the map")
+  }
+  newScript.onload = () => {
+    this.setState({google: window.google})
+  }
+  newScript.defer = true
+  newScript.async = true
+  document.currentScript.parentNode.insertBefore(newScript, document.body.nextSibling);
+  newScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAgaeRT4AeIOkYMjFqUqMqXQMtczkvel44&v=3";
+}
+
   render() {
     return (
       <div>
         <div className="App">
-          <Map google={this.props.google}/>
+        {/*If the state google object is not empty*/}
+        {Object.keys(this.state.google).length > 0 &&
+          <Map google={this.state.google}/>
+        }
         </div>
       </div>
     );
   }
 }
 
-// OTHER MOST IMPORTANT: Here we are exporting the App component WITH the GoogleApiWrapper. You pass it down with an object containing your API key
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyAgaeRT4AeIOkYMjFqUqMqXQMtczkvel44&v=3',
-})(App)
+export default App;
